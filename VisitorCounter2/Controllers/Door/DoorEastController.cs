@@ -28,7 +28,7 @@ namespace VisitorCounter2.Controllers.Door
         [HttpGet("EastEntrance")]
         public async Task<NumberVisitors> EastEntrance()
         {
-            NumberVisitors numberVisitors = await visitor.VisitorEntranceOutput(Db, 0);
+            NumberVisitors numberVisitors = await visitor.VisitorEntranceOutput( 0);
 
             logger.LogInformation(logOutput.Informasion(GetType().Name, numberVisitors.Visitors));
 
@@ -40,7 +40,7 @@ namespace VisitorCounter2.Controllers.Door
         [HttpGet("EastOutput")]
         public async Task<NumberVisitors> EastOutput()
         {
-            NumberVisitors numberVisitors = await visitor.VisitorEntranceOutput(Db, 1);
+            NumberVisitors numberVisitors = await visitor.VisitorEntranceOutput( 1);
 
             logger.LogInformation(logOutput.Informasion(GetType().Name, numberVisitors.Visitors));
 

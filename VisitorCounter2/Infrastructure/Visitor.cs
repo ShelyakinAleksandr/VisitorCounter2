@@ -9,23 +9,31 @@ namespace VisitorCounter2.Infrastructure
 {
     public class Visitor
     {
-        public async Task<NumberVisitors> VisitorEntranceOutput(AppDb Db, int operation)
+
+        public async Task<NumberVisitors> VisitorEntranceOutput(int operation)
         {
-            SqlQuery quevy = new SqlQuery(Db);
+            lock (Variables.allVisitor)
+            {
+                int av = Convert.ToInt32(Variables.allVisitor);
 
-            int numberVisitors = await quevy.CountVisitor(operation);
-
-            return new NumberVisitors(numberVisitors);
+                int result = operation switch
+                {
+                    0 => ++av,
+                    1 => --av
+                };
+                Variables.allVisitor = av;
+                return new NumberVisitors(result);
+            }
         }
 
-        public DateVisitors StatisticVisitor(AppDb Db, DateTime dateStart, DateTime? dateEnd)
+        public async Task<DateVisitors> StatisticVisitor(AppDb Db, DateTime dateStart, DateTime? dateEnd)
         {
 
             DateVisitors dateVisitors = new DateVisitors();
 
             SqlQuery quevy = new SqlQuery(Db);
 
-            quevy.StatisticVisitor(dateStart, dateEnd);
+            await quevy.StatisticVisitor(dateStart, dateEnd);
 
             return dateVisitors;
         }

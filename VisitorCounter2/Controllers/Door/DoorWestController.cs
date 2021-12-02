@@ -9,7 +9,7 @@ using VisitorCounter2.Infrastructure;
 
 namespace VisitorCounter2.Controllers.Door
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class DoorWestController : ControllerBase
     {
@@ -28,7 +28,7 @@ namespace VisitorCounter2.Controllers.Door
         [HttpGet("WestEntrance")]
         public async Task<NumberVisitors> WestEntrance()
         {
-            NumberVisitors numberVisitors = await visitor.VisitorEntranceOutput(Db, 0);
+            NumberVisitors numberVisitors = await visitor.VisitorEntranceOutput(0);
 
             logger.LogInformation(logOutput.Informasion(GetType().Name, numberVisitors.Visitors));
 
@@ -38,7 +38,7 @@ namespace VisitorCounter2.Controllers.Door
         [HttpGet("WestOutput")]
         public async Task<NumberVisitors> WestOutput()
         {
-            NumberVisitors numberVisitors = await visitor.VisitorEntranceOutput(Db, 1);
+            NumberVisitors numberVisitors = await visitor.VisitorEntranceOutput(1);
 
             logger.LogInformation(logOutput.Informasion(GetType().Name, numberVisitors.Visitors));
 

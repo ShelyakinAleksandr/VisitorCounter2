@@ -52,7 +52,7 @@ namespace VisitorCounter2.Controllers
                 {
                     timeVisitors.Add(
                          Convert.ToDateTime(list[j]["Time"]).ToString("H:mm"),
-                         Convert.ToInt32(list[j]["VisitorCount"])
+                         Convert.ToInt32(list[j]["VisitorCount"].ToString())
                     );
 
                 }
