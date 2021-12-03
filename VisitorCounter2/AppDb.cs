@@ -3,6 +3,9 @@ using MySqlConnector;
 
 namespace VisitorCounter2
 {
+    /// <summary>
+    /// Класс описывающий подключения к БД
+    /// </summary>
     public class AppDb
     {
         public MySqlConnection Connection { get; }

@@ -25,6 +25,7 @@ namespace VisitorCounter2
 
         public void ConfigureServices(IServiceCollection services)
         {
+            //Строка подключения из загрузочного файла
             string connection = Configuration.GetConnectionString("DefaultConnection");
             services.AddTransient<AppDb>(_ => new AppDb(connection));
 

@@ -10,6 +10,10 @@ using VisitorCounter2.Infrastructure;
 
 namespace VisitorCounter2.Controllers
 {
+    /// <summary>
+    /// Контроллер для запуска таймера который сохраняет количечтво посетителей в БД
+    /// </summary>
+
     [Route("[controller]")]
     [ApiController]
     public class TimerController : ControllerBase

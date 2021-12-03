@@ -5,6 +5,9 @@ using System.Threading.Tasks;
 
 namespace VisitorCounter2.Infrastructure
 {
+    /// <summary>
+    /// Класс для отображения количества посетителей
+    /// </summary>
     public class NumberVisitors
     {
         int visitors;

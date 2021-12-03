@@ -5,6 +5,9 @@ using System.Threading.Tasks;
 
 namespace VisitorCounter2.Model
 {
+    /// <summary>
+    /// Класс для получения дат для формирования отчета
+    /// </summary>
     public class RequestDate
     {
         public DateTime DateStart { get; set; }
