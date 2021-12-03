@@ -36,10 +36,10 @@ namespace VisitorCounter2.Controllers
             else
             {
                 Timer timer = new Timer();
-                timer.Interval = 3600000;
+                timer.Interval = 3600000; //1 час
                 timer.Elapsed += Timer_Elapsed;
-                timer.AutoReset = true;
-                timer.Enabled = true;
+                timer.AutoReset = true; // повторяем
+                timer.Enabled = true; //Запускаем
 
                 return "Таймер Запущен";
             }
