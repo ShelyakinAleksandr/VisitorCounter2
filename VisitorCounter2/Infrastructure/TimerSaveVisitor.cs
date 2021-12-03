@@ -19,7 +19,7 @@ namespace VisitorCounter2.Infrastructure
         }
 
         /// <summary>
-        /// Метод сохраняет текущее количество посетителей в БД 
+        /// Метод сохраняет текущее количество посетителей
         /// </summary>
         public async void SaveVisitor()
         {
