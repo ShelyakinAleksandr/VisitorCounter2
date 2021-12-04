@@ -14,8 +14,6 @@ namespace VisitorCounter2
 {
     public class Startup
     {
-        // This method gets called by the runtime. Use this method to add services to the container.
-        // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         private readonly IConfiguration Configuration;
 
         public Startup(IConfiguration configuration)
@@ -25,20 +23,19 @@ namespace VisitorCounter2
 
         public void ConfigureServices(IServiceCollection services)
         {
-            //Строка подключения из загрузочного файла
+            //Строка подключения к БД из загрузочного файла
             string connection = Configuration.GetConnectionString("DefaultConnection");
             services.AddTransient<AppDb>(_ => new AppDb(connection));
 
             services.AddControllers();
 
-            // Register the Swagger generator, defining 1 or more Swagger documents
+            //Регистрация  Свагер
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v2", new OpenApiInfo { Title = "VisitorCounter", Version = "v2" });
             });
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             //Подключаю свагер
