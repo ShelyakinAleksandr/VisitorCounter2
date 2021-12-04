@@ -23,13 +23,11 @@ namespace VisitorCounter2
 
         public void ConfigureServices(IServiceCollection services)
         {
-            //Строка подключения к БД из загрузочного файла
             string connection = Configuration.GetConnectionString("DefaultConnection");
             services.AddTransient<AppDb>(_ => new AppDb(connection));
 
             services.AddControllers();
 
-            //Регистрация  Свагер
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v2", new OpenApiInfo { Title = "VisitorCounter", Version = "v2" });
@@ -38,10 +36,8 @@ namespace VisitorCounter2
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            //Подключаю свагер
             app.UseSwagger();
 
-            //Подключаю интерфейс свагер
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v2/swagger.json", "VisitorCounter");
@@ -54,7 +50,6 @@ namespace VisitorCounter2
 
             app.UseRouting();
 
-            // подключаем маршрутизацию на контроллеры
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
