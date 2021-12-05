@@ -23,10 +23,19 @@ namespace VisitorCounter2.Infrastructure
             {
                 int av = Convert.ToInt32(Variables.allVisitor);
 
-                int result = operation switch
+                int result = 0; 
+                switch (operation)
                 {
-                    0 => ++av,
-                    1 => --av
+                    case 0:
+                        {
+                            result = ++av;
+                            break;
+                        }
+                    case 1:
+                        {
+                            if (av > 0) result = --av;
+                            break;
+                        }
                 };
                 Variables.allVisitor = av;
                 return new NumberVisitors(result);
