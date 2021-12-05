@@ -16,7 +16,7 @@ namespace VisitorCounter2.Controllers.Door
         private readonly ILogger<DoorEastController> logger;
 
         LogOutput logOutput = new LogOutput();
-        Visitor visitor = new Visitor();
+        
         AppDb Db { get; }
 
         public DoorEastController(AppDb db, ILogger<DoorEastController> logger)
@@ -28,6 +28,7 @@ namespace VisitorCounter2.Controllers.Door
         [HttpGet("EastEntrance")]
         public async Task<NumberVisitors> EastEntrance()
         {
+            Visitor visitor = new Visitor(Db);
             NumberVisitors numberVisitors = await visitor.VisitorEntranceOutput( 0);
 
             logger.LogInformation(logOutput.Informasion(GetType().Name, numberVisitors.Visitors));
@@ -40,6 +41,7 @@ namespace VisitorCounter2.Controllers.Door
         [HttpGet("EastOutput")]
         public async Task<NumberVisitors> EastOutput()
         {
+            Visitor visitor = new Visitor(Db);
             NumberVisitors numberVisitors = await visitor.VisitorEntranceOutput( 1);
 
             logger.LogInformation(logOutput.Informasion(GetType().Name, numberVisitors.Visitors));

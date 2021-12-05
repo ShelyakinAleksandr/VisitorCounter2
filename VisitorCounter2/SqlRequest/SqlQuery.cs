@@ -57,15 +57,18 @@ namespace VisitorCounter2.SqlRequest
         /// Метод сохранения текушего количества посетителей в БД
         /// </summary>
         /// <returns></returns>
-        public async Task<bool> SaveVisitor( )
+        public async Task<bool> SaveVisitor( int operation )
         {
-            string sqlQuesry = @"Call SaveVisitor2( @visitor)";
+            string sqlQuesry = null;
+            if(operation == 0)
+                 sqlQuesry = @"Call SaveVisitorEntrance(@dateTime)";
+            else
+                sqlQuesry = @"Call SaveVisitorOutput(@dateTime)";
 
             MySqlCommand cmd = new MySqlCommand(sqlQuesry, Db.Connection);
-            lock (Variables.allVisitor)
-            {
-                cmd.Parameters.Add(new MySqlParameter { ParameterName = "@visitor", DbType = DbType.Int32, Value = Variables.allVisitor });
-            }
+
+            cmd.Parameters.Add(new MySqlParameter { ParameterName = "@dateTime", DbType = DbType.DateTime, Value = DateTime.Now });
+            
             await Db.Connection.OpenAsync();
             int reader = cmd.ExecuteNonQuery();
             await Db.Connection.CloseAsync();

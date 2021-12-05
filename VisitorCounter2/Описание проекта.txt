@@ -1,5 +1,5 @@
 VisitorCounter регистрирует вход/выход посетителей в Торговый Центр.
-Сделано 10 контролеров. 
+Сделано 9 контролеров. 
 8 (GET ) на каждую дверь(4 на вход, 4 на выход). Все они обращаются к общей переменной «allVisitor»(object). 
 В методах которые обращаются к переменной allVisitor, эта переменная блокируется оператором lock (пока идет её изменение или считывание) 
 1 контроллер для получения статистики(Post). Принемает json файл формата 
@@ -56,41 +56,23 @@ VisitorCounter регистрирует вход/выход посетителе
   "dateStart": "2021-12-03T10:10:27.157Z"
 }
 
-1 (Get) контроллер Timer. Запускает таймер который сохраняет текущее количество посетителей каждый час. Пример: Сейчас 13:27. Отправили Get запрос 
-http://localhost:13706/Timer
-Таймер сработал сразу, и будет срабатывать через каждый час. Следующее срабатывание будет в 14:27.
-
 Описание хранимых процедур
 1)
 CREATE DEFINER=`Admin`@`%` PROCEDURE `StatisticVisitor`(_DateStart date,
 								     _DateEnd date)
 BEGIN
-Выбрка по ДатеВремя, здесь же разделяем на дату и время
-select DATE_FORMAT(DateTimeVisitor, '%Y-%m-%d') Date,
-	 DATE_FORMAT(DateTimeVisitor, '%H:00') Time ,
-	   sum(VisitorCount) as VisitorCount  сеимруем количечтво по часам
-from visitorcounter
+
+select DATE_FORMAT(DateTimeVisitor, '%Y-%m-%d') Date, разбивка на дату
+	 DATE_FORMAT(DateTimeVisitor, '%H:00') Time , разбивка на время
+	   sum(Entrance) as VisitorCount Сумма всех посетителей
+from timevisitor
 where if( _DateEnd is not null,
-выборка по диапазону дат
 		Cast( DateTimeVisitor AS Date)	BETWEEN  _DateStart and _DateEnd,
-Выборка за день
           Cast( DateTimeVisitor AS Date) = _DateStart
         )
-GROUP BY Date, Time группируем по дате времени
-  ORDER BY Date, Time сортируем по дате времени
+GROUP BY Date, Time групировка
+  ORDER BY Date, Time сортировка
         ;
 
 END
 
-2) 
-CREATE DEFINER=`Admin`@`%` PROCEDURE `SaveVisitor2`(_visitor int)  
-BEGIN
-Создаём запись в БД о количестве посетителей
-	insert into visitorcounter
-	 ( DateTimeVisitor, 
-       VisitorCount)
-	values
-	 (NOW(),
-	 _visitor); количество посетителей
-
-END

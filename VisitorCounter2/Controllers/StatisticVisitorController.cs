@@ -11,11 +11,10 @@ using VisitorCounter2.SqlRequest;
 
 namespace VisitorCounter2.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class StatisticVisitorController : ControllerBase
     {
-        Visitor visitor = new Visitor();
         AppDb Db { get; }
 
         public StatisticVisitorController(AppDb db)

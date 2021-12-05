@@ -12,6 +12,13 @@ namespace VisitorCounter2.Infrastructure
     /// </summary>
     public class Visitor
     {
+        AppDb Db { get; }
+        
+        public Visitor(AppDb db)
+        {
+            Db = db;
+        }
+
         /// <summary>
         /// Метод отвечающий за входы выход из ТЦ
         /// </summary>
@@ -19,27 +26,40 @@ namespace VisitorCounter2.Infrastructure
         /// <returns></returns>
         public async Task<NumberVisitors> VisitorEntranceOutput(int operation)
         {
+            SqlQuery quevy = new SqlQuery(Db);
+            
+            int result = 0;
+
             lock (Variables.allVisitor)
             {
-                int av = Convert.ToInt32(Variables.allVisitor);
+                int allVisitor = Convert.ToInt32(Variables.allVisitor);
 
-                int result = 0; 
+                
                 switch (operation)
                 {
                     case 0:
                         {
-                            result = ++av;
+                            result = ++allVisitor;
+                            quevy.SaveVisitor(operation);
                             break;
                         }
                     case 1:
                         {
-                            if (av > 0) result = --av;
+                            if (allVisitor > 0)
+                            {
+                                result = --allVisitor;
+                                quevy.SaveVisitor(operation);
+                            }
                             break;
                         }
                 };
-                Variables.allVisitor = av;
-                return new NumberVisitors(result);
+                Variables.allVisitor = allVisitor;
             }
+                
+                 
+
+                return new NumberVisitors(result);
+            
         }
 
         /// <summary>

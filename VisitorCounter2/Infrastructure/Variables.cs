@@ -14,12 +14,5 @@ namespace VisitorCounter2.Infrastructure
         /// Текущее количество посетителей
         /// </summary>
        public static object allVisitor = 0;
-
-        /// <summary>
-        /// Переменная для таймера 
-        /// false таймер отключён
-        /// true запущен
-        /// </summary>
-        public static bool startTimer = false;
     }
 }
