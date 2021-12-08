@@ -13,7 +13,10 @@ namespace VisitorCounter2.Infrastructure
     public class Visitor
     {
         AppDb Db { get; }
-        
+
+        //переменная для общего количества посетителей находящихся в тц  
+        static object allVisitor = 0;
+
         public Visitor(AppDb db)
         {
             Db = db;
@@ -30,36 +33,31 @@ namespace VisitorCounter2.Infrastructure
             
             int result = 0;
 
-            lock (Variables.allVisitor)
+            lock (allVisitor)
             {
-                int allVisitor = Convert.ToInt32(Variables.allVisitor);
+                int Visitor = Convert.ToInt32(allVisitor);
 
-                
                 switch (operation)
                 {
                     case 0:
                         {
-                            result = ++allVisitor;
+                            result = ++Visitor;
                             quevy.SaveVisitor(operation);
                             break;
                         }
                     case 1:
                         {
-                            if (allVisitor > 0)
+                            if (Visitor > 0)
                             {
-                                result = --allVisitor;
+                                result = --Visitor;
                                 quevy.SaveVisitor(operation);
                             }
                             break;
                         }
                 };
-                Variables.allVisitor = allVisitor;
+                allVisitor = Visitor;
             }
-                
-                 
-
                 return new NumberVisitors(result);
-            
         }
 
         /// <summary>
